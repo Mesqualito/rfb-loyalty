@@ -23,7 +23,6 @@ jobs:
 
     steps:
       - setup_remote_docker
-
       - checkout
 
       # Download and cache dependencies
