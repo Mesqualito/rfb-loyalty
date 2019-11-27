@@ -1,5 +1,7 @@
 # rfbloyalty
 
+[![CircleCI](https://circleci.com/gh/Mesqualito/rfb-loyalty.svg?style=svg)](https://circleci.com/gh/Mesqualito/rfb-loyalty)
+
 This application was generated using JHipster 6.4.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.4.1](https://www.jhipster.tech/documentation-archive/v6.4.1).
 
 ## Development
