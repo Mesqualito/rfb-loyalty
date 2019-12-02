@@ -5,18 +5,15 @@ import com.rfb.bootstrap.RfbBootstrap;
 import com.rfb.domain.RfbEvent;
 import com.rfb.domain.RfbLocation;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes= {RfbloyaltyApp.class})
-public class RfbEventRepositoryTest extends AbstractRepositoryTest {
+@SpringBootTest(classes = RfbloyaltyApp.class)
+public class RfbEventRepositoryTestIT extends AbstractRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
