@@ -22,9 +22,10 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
+//@Configuration - Annotation left the building... ( see: https://www.udemy.com/course/angular-4-java-developers/learn/lecture/6156318 )
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Import(SecurityProblemSupport.class)
+@Import(SecurityProblemSupport.class) //...and this '@Import' is a new one!
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JHipsterProperties jHipsterProperties;

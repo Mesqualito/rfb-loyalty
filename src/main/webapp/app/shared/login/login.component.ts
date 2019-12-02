@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -7,6 +7,9 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
+// this component (together with an extra login.service.ts) and auth/auth-session.service.ts with 'AuthServerProvider'
+// were the Angular-components going to the Spring API (SERVER_API_URL + 'api/authentication') in
+// https://www.udemy.com/course/angular-4-java-developers/learn/lecture/6156318
 @Component({
   selector: 'jhi-login-modal',
   templateUrl: './login.component.html'
