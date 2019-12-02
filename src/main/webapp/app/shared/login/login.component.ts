@@ -16,6 +16,7 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 })
 export class JhiLoginModalComponent implements AfterViewInit {
   authenticationError: boolean;
+  authenticationErrorMessage: string;
 
   loginForm = this.fb.group({
     username: [''],
@@ -79,7 +80,11 @@ export class JhiLoginModalComponent implements AfterViewInit {
             this.router.navigateByUrl(redirect);
           }
         },
-        () => (this.authenticationError = true)
+        jsonResponse => {
+          const errorMessage = jsonResponse.error.message;
+          this.authenticationError = true;
+          this.authenticationErrorMessage = errorMessage;
+        }
       );
   }
 
