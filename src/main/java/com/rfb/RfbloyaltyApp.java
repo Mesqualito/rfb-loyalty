@@ -11,7 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.web.context.request.RequestContextListener;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -92,5 +94,12 @@ public class RfbloyaltyApp implements InitializingBean {
             serverPort,
             contextPath,
             env.getActiveProfiles());
+    }
+
+    // this Bean is needed in DomainUserDetailsService.java - 'private final HttpServletRequest request;'
+    // to get the IP address of users which try to log in
+    @Bean
+    public RequestContextListener requestContextListener() {
+        return new RequestContextListener();
     }
 }
