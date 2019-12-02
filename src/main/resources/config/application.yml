@@ -101,6 +101,14 @@ spring:
   output:
     ansi:
       console-available: true
+  # some time in the past, here was the config part of the social-login preparation of JHipster
+  # now it has to be done individual.
+  # see:
+  # 1.) https://www.udemy.com/course/angular-4-java-developers/learn/lecture/8439518
+  # 2.) https://projects.spring.io/spring-social
+  # 3.) https://developers.google.com/+/web/signin/server-side-flow#step_1_create_a_client_id_and_client_secret
+  # 4.) https://developers.facebook.com/docs/facebook-login/v2.2
+  # 5.) https://apps.twitter.com/app/
 
 server:
   servlet:
