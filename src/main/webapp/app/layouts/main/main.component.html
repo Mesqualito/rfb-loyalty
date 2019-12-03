@@ -3,6 +3,9 @@
     <router-outlet name="navbar"></router-outlet>
 </div>
 <div class="container-fluid">
+    <!-- if start page should not look like the other pages, use [ngClass] to define an exception:
+    <div [ngClass]="{'card jh-card': router.url != '/'}">
+    -->
     <div class="card jh-card">
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>
