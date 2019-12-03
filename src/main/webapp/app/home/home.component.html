@@ -1,41 +1,23 @@
-<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
+<div id="rfb-home-intro" class="row">
+    <div class="col-md-4">
+        <p class="events-header">Always cut, never rest!</p>
+        <img src="../../content/images/volkach.jpg" width="400px" height="300px">
     </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Welcome, Java Hipster!</h1>
-        <p class="lead">This is your homepage</p>
-
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>You don't have an account yet?</span>&nbsp;
-                <a class="alert-link" routerLink="account/register">Register a new account</a>
-            </div>
-        </div>
-
+    <div class="col-md-8">
+        <h1 class="display-4">We love cutting the bough we're sitting on!</h1>
+        <p>Franconia dolor ipsum sit amet, alldaach Hulz haggn und Rosn mähn eirama nodwendich Schabraggn? Alldaach Hulz
+            haggn und Rosn mähn aufreeng Dabbn drum waas i ned damisch Dunnerwedder. Berch, Dreegbambl Hiesla neibfrobfm
+            Seidla Schabraggn vo zwölfa af Middooch! Des langd freili, Grawallschachdl Wedderhex Hundsgrübbl daneem des
+            gäit net schnalln. Abbord iich find nix fiesln Baggers derhuzn Schdeggerlerswald. Dreeg nauf und nunder
+            Strasserbo Daabschwätzer Dreggschleider.</p>
         <p>
-            If you have any question on JHipster:
+            Weggla Bledzla sunsd hau i der anne naaf maadschn! Zipperle bsuffm des langd freili, aufschdeh Glumb Heia
+            Subbmkaschber graina. Hubbl Bechermaasder, Keeszibfl nacherd probiers hald mol klaa? Fluchzeich, Bremsn
+            mordsdrum glaam Abflbuddzn Haufm. Bag mas Schneggla Hundsgrübbl Egg Baggschdaakees.
         </p>
-
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener noreferrer">follow @java_hipster on Twitter</a></li>
-        </ul>
-
-        <p>
-            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-        </p>
+        <p> Hald dei Goschn vo zwölfa af Middooch baarfers dei ozullds Buddlasbaa kannsd selber essen. Bass a mool auf
+            Gschmarri Hulzkulln Habberla? Heid nämmer babbsieß fiesl mal ned dran rum Keesbleedla, Gfuchdl gluhrn. Oggs
+            vo der Fleischbrüggn Gimbl Oarschgradzer Schloudfeecher eirama. Heid nämmer, Sulln Raffgalln sunsd hau i der
+            anne naaf Abflbuddzn. </p>
     </div>
 </div>
