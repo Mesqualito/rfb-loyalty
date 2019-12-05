@@ -97,6 +97,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
+    public RfbLocation getHomeLocation() {
+        return homeLocation;
+    }
+
+    public void setHomeLocation(RfbLocation homeLocation) {
+        this.homeLocation = homeLocation;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "rfb_location_id")
+    private RfbLocation homeLocation;
+
     public Long getId() {
         return id;
     }

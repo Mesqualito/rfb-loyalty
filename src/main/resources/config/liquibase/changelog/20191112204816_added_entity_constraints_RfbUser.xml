@@ -7,12 +7,12 @@
         Added the constraints for entity RfbUser.
     -->
     <changeSet id="20191112204816-2" author="jhipster">
-        
+       <!--
         <addForeignKeyConstraint baseColumnNames="home_location_id"
                                  baseTableName="rfb_user"
                                  constraintName="fk_rfb_user_home_location_id"
                                  referencedColumnNames="id"
                                  referencedTableName="rfb_location"/>
-
+-->
     </changeSet>
 </databaseChangeLog>

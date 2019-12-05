@@ -50,8 +50,6 @@ public class CacheConfiguration {
             createCache(cm, com.rfb.domain.RfbEvent.class.getName());
             createCache(cm, com.rfb.domain.RfbEvent.class.getName() + ".rfbEventAttendances");
             createCache(cm, com.rfb.domain.RfbEventAttendance.class.getName());
-            createCache(cm, com.rfb.domain.RfbUser.class.getName());
-            createCache(cm, com.rfb.domain.RfbUser.class.getName() + ".rfbEventAttendances");
             // jhipster-needle-ehcache-add-entry
         };
     }
