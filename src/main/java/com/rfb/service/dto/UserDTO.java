@@ -52,6 +52,8 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private Long homeLocation;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -69,6 +71,7 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.homeLocation = user.getHomeLocation().getId();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -178,6 +181,14 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public Long getHomeLocation() {
+        return homeLocation;
+    }
+
+    public void setHomeLocation(Long homeLocation) {
+        this.homeLocation = homeLocation;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -192,6 +203,7 @@ public class UserDTO {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
+            ", Location=" + homeLocation +
             ", authorities=" + authorities +
             "}";
     }

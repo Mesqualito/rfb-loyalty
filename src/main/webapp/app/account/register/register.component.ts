@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +6,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/constants/error.constants';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { Register } from './register.service';
+import { RfbLocationService } from 'app/entities/rfb-location/rfb-location.service';
 
 @Component({
   selector: 'jhi-register',
@@ -18,12 +19,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   errorUserExists: string;
   success: boolean;
   modalRef: NgbModalRef;
+  locations: any[];
 
   registerForm = this.fb.group({
     login: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*$')]],
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
+    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    homeLocation: ['']
   });
 
   constructor(
@@ -31,11 +34,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     private registerService: Register,
     private elementRef: ElementRef,
     private renderer: Renderer,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private locationService: RfbLocationService
   ) {}
 
   ngOnInit() {
     this.success = false;
+    this.loadLocations();
   }
 
   ngAfterViewInit() {
@@ -79,5 +84,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     } else {
       this.error = 'ERROR';
     }
+  }
+
+  loadLocations() {
+    this.locations = [];
+    this.locationService
+      .query({
+        page: 0,
+        size: 100,
+        sort: ['locationName,runDayOfWeek', 'ASC']
+      })
+      .subscribe((res: any) => {
+        this.locations = res.json();
+      });
   }
 }
