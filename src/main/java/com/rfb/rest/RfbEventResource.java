@@ -6,6 +6,7 @@ import com.rfb.service.dto.RfbEventDTO;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -108,6 +109,14 @@ public class RfbEventResource {
         log.debug("REST request to get RfbEvent : {}", id);
         Optional<RfbEventDTO> rfbEventDTO = rfbEventService.findOne(id);
         return ResponseUtil.wrapOrNotFound(rfbEventDTO);
+    }
+
+    @GetMapping("/rfb-event/location/{locationID}")
+    @Timed
+    public ResponseEntity<RfbEventDTO> getTodaysEventByLocation(@PathVariable Long locationID) {
+        log.debug("REST request to get a single event by location and today's date.");
+        RfbEventDTO event = rfbEventService.findByTodayAndLocation(locationID);
+        return new ResponseEntity<RfbEventDTO>(event, null, HttpStatus.OK);
     }
 
     /**

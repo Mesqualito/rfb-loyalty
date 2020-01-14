@@ -1,23 +1,59 @@
 <div id="rfb-home-intro" class="row">
     <div class="col-md-4">
-        <p class="events-header">Always cut, never rest!</p>
+        <p class="events-header">We will come over Volkach some day...</p>
         <img src="../../content/images/volkach.jpg" width="400px" height="300px">
     </div>
     <div class="col-md-8">
         <h1 class="display-4">We love cutting the bough we're sitting on!</h1>
-        <p>Franconia dolor ipsum sit amet, alldaach Hulz haggn und Rosn mähn eirama nodwendich Schabraggn? Alldaach Hulz
-            haggn und Rosn mähn aufreeng Dabbn drum waas i ned damisch Dunnerwedder. Berch, Dreegbambl Hiesla neibfrobfm
-            Seidla Schabraggn vo zwölfa af Middooch! Des langd freili, Grawallschachdl Wedderhex Hundsgrübbl daneem des
-            gäit net schnalln. Abbord iich find nix fiesln Baggers derhuzn Schdeggerlerswald. Dreeg nauf und nunder
-            Strasserbo Daabschwätzer Dreggschleider.</p>
-        <p>
-            Weggla Bledzla sunsd hau i der anne naaf maadschn! Zipperle bsuffm des langd freili, aufschdeh Glumb Heia
-            Subbmkaschber graina. Hubbl Bechermaasder, Keeszibfl nacherd probiers hald mol klaa? Fluchzeich, Bremsn
-            mordsdrum glaam Abflbuddzn Haufm. Bag mas Schneggla Hundsgrübbl Egg Baggschdaakees.
-        </p>
-        <p> Hald dei Goschn vo zwölfa af Middooch baarfers dei ozullds Buddlasbaa kannsd selber essen. Bass a mool auf
-            Gschmarri Hulzkulln Habberla? Heid nämmer babbsieß fiesl mal ned dran rum Keesbleedla, Gfuchdl gluhrn. Oggs
-            vo der Fleischbrüggn Gimbl Oarschgradzer Schloudfeecher eirama. Heid nämmer, Sulln Raffgalln sunsd hau i der
-            anne naaf Abflbuddzn. </p>
-    </div>
-</div>
+        <p><strong>Shit over it!</strong> We do what we do. Try it out yourself, it's a lot of fun, love and peace! Next
+            time we'll meet is</p>
+        <div *jhiHasAnyAuthority="'ROLE_ORGANIZER'" class="card col-md-12">
+            <div *ngIf="todaysEvent">
+                <p><strong>Event Date:</strong> {{todaysEvent.eventDate}}</p>
+                <p><strong>Event Location:</strong> {{todaysEvent.rfbLocationDTO.locationName}}</p>
+                <p><strong>Event Code:</strong> {{todaysEvent.eventCode}}</p>
+            </div>
+            <p *ngIf="!todaysEvent">No events today! </p>
+        </div>
+        <br>
+        <div *jhiHasAnyAuthority="'ROLE_RUNNER'" class="card col-md-12">
+            <div *ngIf="checkedIn" class="alert alert-success" role="alert" style="padding-top: 10px;">
+                You are checked in for today's shit-over. Thank you!
+            </div>
+            <div *ngIf="!checkedIn" class="card-body">
+                <h4>Check-In for today's shit-over!</h4>
+                <p>Please use the form to check in to today's event. If you don't know the code please ask your
+                    organizer. </p>
+                <div *ngIf="errors.invalidEventCode" class="alert alert-danger"
+                     role="alert">{{errors.invalidEventCode}}</div>
+                <form name="checkinForm" role="form" novalidate (ngSubmit)="checkIn()" #checkInForm="ngForm">
+                    <div class="modal-body">
+                        <jhi-alert-error></jhi-alert-error>
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_location">Location</label>
+                            <select class="form-control" id="field_location" name="location"
+                                    [(ngModel)]="model.location"
+                                    #location="ngModel" required>
+                                <option [ngValue]="null"></option>
+                                <option [ngValue]="location.id"
+                                        *ngFor="let location of locations">{{location.locationName}}</option>
+                            </select>
+                            <!-- <small *ngIf="!model.location"><a href="/#/settings">SET HOME LOCATION</a></small> -->
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_eventCode">Event Code</label>
+                            <input type="text" class="form-control" name="eventCode" id="field_eventCode"
+                                   [(ngModel)]="model.eventCode"
+                                   #eventCode="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" [disabled]="checkInForm.form.invalid || isSaving" class="btn btn-primary">
+                            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> <!-- end right column -->
+</div><!-- end row -->

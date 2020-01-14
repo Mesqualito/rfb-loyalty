@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
-import { IRfbEvent } from 'app/shared/model/rfb-event.model';
+import { IRfbEvent, RfbEvent } from 'app/shared/model/rfb-event.model';
 
 type EntityResponseType = HttpResponse<IRfbEvent>;
 type EntityArrayResponseType = HttpResponse<IRfbEvent[]>;
@@ -37,6 +37,12 @@ export class RfbEventService {
     return this.http
       .get<IRfbEvent>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  findByLocation(locationID: number): Observable<RfbEvent> {
+    return this.http.get(`${this.resourceUrl}/location/${locationID}`).map((res: Response) => {
+      return res.json();
+    });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
