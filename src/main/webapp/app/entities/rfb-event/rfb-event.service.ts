@@ -40,9 +40,11 @@ export class RfbEventService {
   }
 
   findByLocation(locationID: number): Observable<RfbEvent> {
-    return this.http.get(`${this.resourceUrl}/location/${locationID}`).map((res: Response) => {
-      return res.json();
-    });
+    return this.http.get<IRfbEvent>(`${this.resourceUrl}/location/${locationID}`, { observe: 'response' }).pipe(
+      map((res: Response) => {
+        return res.json();
+      })
+    );
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
