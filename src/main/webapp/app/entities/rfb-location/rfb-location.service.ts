@@ -11,7 +11,8 @@ export class RfbLocationService {
 
     private resourceUrl = SERVER_API_URL + 'api/rfb-locations';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     create(rfbLocation: RfbLocation): Observable<RfbLocation> {
         const copy = this.convert(rfbLocation);
@@ -41,6 +42,12 @@ export class RfbLocationService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    getRfbLeaderForLocation(id: number, req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(`${this.resourceUrl}/${id}/leaders`, options)
+            .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

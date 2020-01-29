@@ -1,0 +1,30 @@
+</br>
+<div class="card col-md-12">
+    <div class="form-group">
+        <h4>Location's Ranking</h4>
+        <p>Please select a Location to see it's Ranking. </p>
+        <select class="form-control" id="field_location" name="locationOption" [(ngModel)]="actualLocationId"
+                (change)="onSelect()">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="locationOption.id" *ngFor="let locationOption of locationList">
+                {{locationOption.locationName}}
+            </option>
+        </select>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>Runner's Name</span> <span class="fa"></span></th>
+                <th><span>Total of Runs</span> <span class="fa"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let leader of leaderList">
+                <td>{{leader.userName}}</td>
+                <td>{{leader.totalRuns}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -5,7 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {Ng2Webstorage} from 'ng2-webstorage';
 
 import {RfbloyaltySharedModule, UserRouteAccessService} from './shared';
-import {RfbloyaltyHomeModule} from './home/home.module';
+import {RfbloyaltyHomeModule} from './home';
 import {RfbloyaltyAdminModule} from './admin/admin.module';
 import {RfbloyaltyAccountModule} from './account/account.module';
 import {RfbloyaltyEntityModule} from './entities/entity.module';
