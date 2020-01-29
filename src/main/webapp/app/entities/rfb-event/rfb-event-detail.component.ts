@@ -1,24 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { IRfbEvent } from 'app/shared/model/rfb-event.model';
+import {RfbEvent} from './rfb-event.model';
+import {RfbEventService} from './rfb-event.service';
 
 @Component({
-  selector: 'jhi-rfb-event-detail',
-  templateUrl: './rfb-event-detail.component.html'
+    selector: 'jhi-rfb-event-detail',
+    templateUrl: './rfb-event-detail.component.html'
 })
-export class RfbEventDetailComponent implements OnInit {
-  rfbEvent: IRfbEvent;
+export class RfbEventDetailComponent implements OnInit, OnDestroy {
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+    rfbEvent: RfbEvent;
+    private subscription: Subscription;
+    private eventSubscriber: Subscription;
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ rfbEvent }) => {
-      this.rfbEvent = rfbEvent;
-    });
-  }
+    constructor(
+        private eventManager: JhiEventManager,
+        private rfbEventService: RfbEventService,
+        private route: ActivatedRoute
+    ) {
+    }
 
-  previousState() {
-    window.history.back();
-  }
+    ngOnInit() {
+        this.subscription = this.route.params.subscribe((params) => {
+            this.load(params['id']);
+        });
+        this.registerChangeInRfbEvents();
+    }
+
+    load(id) {
+        this.rfbEventService.find(id).subscribe((rfbEvent) => {
+            this.rfbEvent = rfbEvent;
+        });
+    }
+    previousState() {
+        window.history.back();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+        this.eventManager.destroy(this.eventSubscriber);
+    }
+
+    registerChangeInRfbEvents() {
+        this.eventSubscriber = this.eventManager.subscribe(
+            'rfbEventListModification',
+            (response) => this.load(this.rfbEvent.id)
+        );
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * Spring Data  repository for the RfbEventAttendance entity.
+ * Spring Data JPA repository for the RfbEventAttendance entity.
  */
 @SuppressWarnings("unused")
 @Repository

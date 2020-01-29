@@ -1,54 +1,52 @@
 <div>
-    <h2 id="page-heading">
-        <span>Rfb Locations</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-rfb-location" [routerLink]="['/rfb-location/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
+    <h2>
+        <span>Locations</span>
+        <button class="btn btn-primary float-right jh-create-entity create-rfb-location" [routerLink]="['/', { outlets: { popup: ['rfb-location-new'] } }]">
+            <span class="fa fa-plus"></span>
             <span >
-            Create a new Rfb Location
+            Create new Location
             </span>
         </button>
     </h2>
-    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
-    <br/>
-    <div class="alert alert-warning" *ngIf="rfbLocations?.length === 0">
-        <span>No rfbLocations found</span>
+    <div class="row">
     </div>
-    <div class="table-responsive" *ngIf="rfbLocations?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+    <br/>
+    <div class="table-responsive" *ngIf="rfbLocations">
+        <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="locationName"><span>Location Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="runDayOfWeek"><span>Run Day Of Week</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"></th>
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="locationName"><span>Location Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="runDayOfWeek"><span>Run Day Of Week</span> <span class="fa fa-sort"></span></th>
+            <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let rfbLocation of rfbLocations ;trackBy: trackId">
-                <td><a [routerLink]="['/rfb-location', rfbLocation.id, 'view' ]">{{rfbLocation.id}}</a></td>
+                <td><a [routerLink]="['../rfb-location', rfbLocation.id ]">{{rfbLocation.id}}</a></td>
                 <td>{{rfbLocation.locationName}}</td>
                 <td>{{rfbLocation.runDayOfWeek}}</td>
                 <td class="text-right">
-                    <div class="btn-group">
+                    <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['/rfb-location', rfbLocation.id, 'view' ]"
+                                [routerLink]="['../rfb-location', rfbLocation.id ]"
                                 class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/rfb-location', rfbLocation.id, 'edit']"
+                                [routerLink]="['/', { outlets: { popup: 'rfb-location/'+ rfbLocation.id + '/edit'} }]"
+                                replaceUrl="true"
                                 class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="fa fa-pencil"></span>
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/rfb-location', { outlets: { popup: rfbLocation.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'rfb-location/'+ rfbLocation.id + '/delete'} }]"
                                 replaceUrl="true"
-                                queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="fa fa-remove"></span>
                             <span class="d-none d-md-inline">Delete</span>
                         </button>
                     </div>
@@ -57,12 +55,12 @@
             </tbody>
         </table>
     </div>
-    <div [hidden]="rfbLocations?.length === 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        <div *ngIf="rfbLocations && rfbLocations.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
         </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
-    </div>
 </div>

@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'jhi-footer',
-  templateUrl: './footer.component.html'
+    selector: 'jhi-footer',
+    templateUrl: './footer.component.html'
 })
 export class FooterComponent {
-  cuttingYears: number;
+    currentYear: number;
 
-  constructor() {
-    this.cuttingYears = new Date().getFullYear() - 1921;
-  }
+    constructor() {
+        this.currentYear = new Date().getFullYear();
+    }
 }

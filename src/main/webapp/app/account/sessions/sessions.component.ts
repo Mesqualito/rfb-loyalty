@@ -1,40 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Session } from './session.model';
-import { SessionsService } from './sessions.service';
+import {Session} from './session.model';
+import {SessionsService} from './sessions.service';
+import {Principal} from '../../shared';
 
 @Component({
-  selector: 'jhi-sessions',
-  templateUrl: './sessions.component.html'
+    selector: 'jhi-sessions',
+    templateUrl: './sessions.component.html'
 })
 export class SessionsComponent implements OnInit {
-  account: any;
-  error: string;
-  success: string;
-  sessions: Session[];
 
-  constructor(private sessionsService: SessionsService, private accountService: AccountService) {}
+    account: any;
+    error: string;
+    success: string;
+    sessions: Session[];
 
-  ngOnInit() {
-    this.sessionsService.findAll().subscribe(sessions => (this.sessions = sessions));
+    constructor(
+        private sessionsService: SessionsService,
+        private principal: Principal
+    ) {
+    }
 
-    this.accountService.identity().subscribe(account => {
-      this.account = account;
-    });
-  }
+    ngOnInit() {
+        this.sessionsService.findAll().subscribe((sessions) => this.sessions = sessions);
 
-  invalidate(series) {
-    this.sessionsService.delete(encodeURIComponent(series)).subscribe(
-      response => {
-        this.error = null;
-        this.success = 'OK';
-        this.sessionsService.findAll().subscribe(sessions => (this.sessions = sessions));
-      },
-      () => {
-        this.success = null;
-        this.error = 'ERROR';
-      }
-    );
-  }
+        this.principal.identity().then((account) => {
+            this.account = account;
+        });
+    }
+
+    invalidate(series) {
+        this.sessionsService.delete(encodeURIComponent(series)).subscribe(
+            (response) => {
+                if (response.status === 200) {
+                    this.error = null;
+                    this.success = 'OK';
+                    this.sessionsService.findAll().subscribe((sessions) => this.sessions = sessions);
+                } else {
+                    this.success = null;
+                    this.error = 'ERROR';
+                }
+            });
+    }
 }

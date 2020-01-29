@@ -1,92 +1,61 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { IRfbEventAttendance, RfbEventAttendance } from 'app/shared/model/rfb-event-attendance.model';
-import { RfbEventAttendanceService } from './rfb-event-attendance.service';
-import { RfbEventAttendanceComponent } from './rfb-event-attendance.component';
-import { RfbEventAttendanceDetailComponent } from './rfb-event-attendance-detail.component';
-import { RfbEventAttendanceUpdateComponent } from './rfb-event-attendance-update.component';
-import { RfbEventAttendanceDeletePopupComponent } from './rfb-event-attendance-delete-dialog.component';
+import {Routes} from '@angular/router';
 
-@Injectable({ providedIn: 'root' })
-export class RfbEventAttendanceResolve implements Resolve<IRfbEventAttendance> {
-  constructor(private service: RfbEventAttendanceService) {}
+import {UserRouteAccessService} from '../../shared';
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IRfbEventAttendance> {
-    const id = route.params['id'];
-    if (id) {
-      return this.service.find(id).pipe(
-        filter((response: HttpResponse<RfbEventAttendance>) => response.ok),
-        map((rfbEventAttendance: HttpResponse<RfbEventAttendance>) => rfbEventAttendance.body)
-      );
-    }
-    return of(new RfbEventAttendance());
-  }
-}
+import {RfbEventAttendanceComponent} from './rfb-event-attendance.component';
+import {RfbEventAttendanceDetailComponent} from './rfb-event-attendance-detail.component';
+import {RfbEventAttendancePopupComponent} from './rfb-event-attendance-dialog.component';
+import {RfbEventAttendanceDeletePopupComponent} from './rfb-event-attendance-delete-dialog.component';
 
 export const rfbEventAttendanceRoute: Routes = [
-  {
-    path: '',
-    component: RfbEventAttendanceComponent,
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'RfbEventAttendances'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/view',
-    component: RfbEventAttendanceDetailComponent,
-    resolve: {
-      rfbEventAttendance: RfbEventAttendanceResolve
-    },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'RfbEventAttendances'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: 'new',
-    component: RfbEventAttendanceUpdateComponent,
-    resolve: {
-      rfbEventAttendance: RfbEventAttendanceResolve
-    },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'RfbEventAttendances'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/edit',
-    component: RfbEventAttendanceUpdateComponent,
-    resolve: {
-      rfbEventAttendance: RfbEventAttendanceResolve
-    },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'RfbEventAttendances'
-    },
-    canActivate: [UserRouteAccessService]
-  }
+    {
+        path: 'rfb-event-attendance',
+        component: RfbEventAttendanceComponent,
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Event Attendances'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'rfb-event-attendance/:id',
+        component: RfbEventAttendanceDetailComponent,
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Event Attendances'
+        },
+        canActivate: [UserRouteAccessService]
+    }
 ];
 
 export const rfbEventAttendancePopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: RfbEventAttendanceDeletePopupComponent,
-    resolve: {
-      rfbEventAttendance: RfbEventAttendanceResolve
+    {
+        path: 'rfb-event-attendance-new',
+        component: RfbEventAttendancePopupComponent,
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Event Attendances'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'RfbEventAttendances'
+    {
+        path: 'rfb-event-attendance/:id/edit',
+        component: RfbEventAttendancePopupComponent,
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Event Attendances'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+    {
+        path: 'rfb-event-attendance/:id/delete',
+        component: RfbEventAttendanceDeletePopupComponent,
+        data: {
+            authorities: ['ROLE_ADMIN'],
+            pageTitle: 'Event Attendances'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    }
 ];

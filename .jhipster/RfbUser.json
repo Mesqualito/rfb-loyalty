@@ -1,35 +1,30 @@
 {
-    "name": "RfbUser",
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "homeLocation",
+            "otherEntityName": "rfbLocation",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "rfbUser"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "rfbEventAttendance",
+            "otherEntityName": "rfbEventAttendance",
+            "otherEntityRelationshipName": "rfbUser"
+        }
+    ],
     "fields": [
         {
             "fieldName": "username",
             "fieldType": "String"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "rfbLocation",
-            "otherEntityRelationshipName": "rfbUser",
-            "relationshipName": "homeLocation",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "rfbEventAttendance",
-            "otherEntityRelationshipName": "rfbUser",
-            "relationshipName": "rfbEventAttendance"
-        }
-    ],
-    "changelogDate": "20191112204816",
+    "changelogDate": "20171014184116",
     "entityTableName": "rfb_user",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+    "service": "serviceImpl"
 }

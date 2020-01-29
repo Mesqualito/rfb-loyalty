@@ -1,27 +1,49 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { RfbloyaltySharedModule } from 'app/shared/shared.module';
-import { RfbEventAttendanceComponent } from './rfb-event-attendance.component';
-import { RfbEventAttendanceDetailComponent } from './rfb-event-attendance-detail.component';
-import { RfbEventAttendanceUpdateComponent } from './rfb-event-attendance-update.component';
+import {RfbloyaltySharedModule} from '../../shared';
 import {
-  RfbEventAttendanceDeleteDialogComponent,
-  RfbEventAttendanceDeletePopupComponent
-} from './rfb-event-attendance-delete-dialog.component';
-import { rfbEventAttendancePopupRoute, rfbEventAttendanceRoute } from './rfb-event-attendance.route';
+    RfbEventAttendanceComponent,
+    RfbEventAttendanceDeleteDialogComponent,
+    RfbEventAttendanceDeletePopupComponent,
+    RfbEventAttendanceDetailComponent,
+    RfbEventAttendanceDialogComponent,
+    RfbEventAttendancePopupComponent,
+    rfbEventAttendancePopupRoute,
+    RfbEventAttendancePopupService,
+    rfbEventAttendanceRoute,
+    RfbEventAttendanceService,
+} from './';
 
-const ENTITY_STATES = [...rfbEventAttendanceRoute, ...rfbEventAttendancePopupRoute];
+const ENTITY_STATES = [
+    ...rfbEventAttendanceRoute,
+    ...rfbEventAttendancePopupRoute,
+];
 
 @NgModule({
-  imports: [RfbloyaltySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    RfbEventAttendanceComponent,
-    RfbEventAttendanceDetailComponent,
-    RfbEventAttendanceUpdateComponent,
-    RfbEventAttendanceDeleteDialogComponent,
-    RfbEventAttendanceDeletePopupComponent
-  ],
-  entryComponents: [RfbEventAttendanceDeleteDialogComponent]
+    imports: [
+        RfbloyaltySharedModule,
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+    ],
+    declarations: [
+        RfbEventAttendanceComponent,
+        RfbEventAttendanceDetailComponent,
+        RfbEventAttendanceDialogComponent,
+        RfbEventAttendanceDeleteDialogComponent,
+        RfbEventAttendancePopupComponent,
+        RfbEventAttendanceDeletePopupComponent,
+    ],
+    entryComponents: [
+        RfbEventAttendanceComponent,
+        RfbEventAttendanceDialogComponent,
+        RfbEventAttendancePopupComponent,
+        RfbEventAttendanceDeleteDialogComponent,
+        RfbEventAttendanceDeletePopupComponent,
+    ],
+    providers: [
+        RfbEventAttendanceService,
+        RfbEventAttendancePopupService,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RfbloyaltyRfbEventAttendanceModule {}

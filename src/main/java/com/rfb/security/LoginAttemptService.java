@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-// this service logs how many times an User Authentication
-// fails - with AuthenticationFailureEventListener or
-// succeeds - with AuthenticationSuccessEventListener
 @Service
 public class LoginAttemptService {
 
@@ -22,10 +19,10 @@ public class LoginAttemptService {
         attemptsCache = CacheBuilder.newBuilder()
             .expireAfterWrite(10, TimeUnit.MINUTES)
             .build(new CacheLoader<String, Integer>() {
-                public Integer load(String key) {
-                    return 0;
-                }
-            });
+            public Integer load(String key) {
+                return 0;
+            }
+        });
     }
 
     public void loginSucceeded(String key) {

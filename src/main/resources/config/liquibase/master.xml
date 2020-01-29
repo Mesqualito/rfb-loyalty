@@ -2,25 +2,16 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
-
-    <property name="now" value="now()" dbms="h2"/>
-    <property name="now" value="now()" dbms="mysql"/>
-
-    <property name="floatType" value="float4" dbms="postgresql, h2"/>
-    <property name="floatType" value="float" dbms="mysql, oracle, mssql, mariadb"/>
-    <property name="clobType" value="clob" dbms="h2"/>
-    <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
-    <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191112204813_added_entity_RfbLocation.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191112204814_added_entity_RfbEvent.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191112204815_added_entity_RfbEventAttendance.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191112204816_added_entity_RfbUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171014184113_added_entity_RfbLocation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171014184114_added_entity_RfbEvent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171014184115_added_entity_RfbEventAttendance.xml" relativeToChangelogFile="false"/>
+    <!--<include file="config/liquibase/changelog/20171014184116_added_entity_RfbUser.xml" relativeToChangelogFile="false"/>-->
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20191112204814_added_entity_constraints_RfbEvent.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191112204815_added_entity_constraints_RfbEventAttendance.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191112204816_added_entity_constraints_RfbUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171014184114_added_entity_constraints_RfbEvent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171014184115_added_entity_constraints_RfbEventAttendance.xml" relativeToChangelogFile="false"/>
+    <!--<include file="config/liquibase/changelog/20171014184116_added_entity_constraints_RfbUser.xml" relativeToChangelogFile="false"/>-->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

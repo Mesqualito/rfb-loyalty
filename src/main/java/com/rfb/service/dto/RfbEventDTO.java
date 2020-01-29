@@ -1,11 +1,12 @@
 package com.rfb.service.dto;
 
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.rfb.domain.RfbEvent} entity.
+ * A DTO for the RfbEvent entity.
  */
 public class RfbEventDTO implements Serializable {
 
@@ -14,7 +15,6 @@ public class RfbEventDTO implements Serializable {
     private LocalDate eventDate;
 
     private String eventCode;
-
 
     private RfbLocationDTO rfbLocationDTO;
 
@@ -60,7 +60,7 @@ public class RfbEventDTO implements Serializable {
         }
 
         RfbEventDTO rfbEventDTO = (RfbEventDTO) o;
-        if (rfbEventDTO.getId() == null || getId() == null) {
+        if(rfbEventDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), rfbEventDTO.getId());
@@ -77,7 +77,6 @@ public class RfbEventDTO implements Serializable {
             "id=" + getId() +
             ", eventDate='" + getEventDate() + "'" +
             ", eventCode='" + getEventCode() + "'" +
-            ", rfbLocation=" + getRfbLocationDTO().getId() +
             "}";
     }
 }

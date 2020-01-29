@@ -14,13 +14,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Service to run scheduled (once per second, once per min or once per hour) and generate random event codes for every
- * location with RFB runs. These codes will be given from the organisers to the runners for that day and that event on
- * the respective location. The system will generate the codes with this service component.
+ * Service to run daily and generate random event codes for RFB runs
  *
- * Annotated with Spring framework stereotype '@Service', but not declared as an Interface (because this service
- * will not be injected), but as a regular Spring Component
- * */
+ * Created by jt on 10/21/17.
+ */
 @Service
 public class RfbEventCodeService {
     private final Logger log = LoggerFactory.getLogger(RfbEventCodeService.class);

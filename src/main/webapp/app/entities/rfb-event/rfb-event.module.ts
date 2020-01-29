@@ -1,24 +1,51 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { RfbloyaltySharedModule } from 'app/shared/shared.module';
-import { RfbEventComponent } from './rfb-event.component';
-import { RfbEventDetailComponent } from './rfb-event-detail.component';
-import { RfbEventUpdateComponent } from './rfb-event-update.component';
-import { RfbEventDeleteDialogComponent, RfbEventDeletePopupComponent } from './rfb-event-delete-dialog.component';
-import { rfbEventPopupRoute, rfbEventRoute } from './rfb-event.route';
+import {RfbloyaltySharedModule} from '../../shared';
+import {
+    RfbEventComponent,
+    RfbEventDeleteDialogComponent,
+    RfbEventDeletePopupComponent,
+    RfbEventDetailComponent,
+    RfbEventDialogComponent,
+    RfbEventPopupComponent,
+    rfbEventPopupRoute,
+    RfbEventPopupService,
+    RfbEventResolvePagingParams,
+    rfbEventRoute,
+    RfbEventService,
+} from './';
 
-const ENTITY_STATES = [...rfbEventRoute, ...rfbEventPopupRoute];
+const ENTITY_STATES = [
+    ...rfbEventRoute,
+    ...rfbEventPopupRoute,
+];
 
 @NgModule({
-  imports: [RfbloyaltySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    RfbEventComponent,
-    RfbEventDetailComponent,
-    RfbEventUpdateComponent,
-    RfbEventDeleteDialogComponent,
-    RfbEventDeletePopupComponent
-  ],
-  entryComponents: [RfbEventDeleteDialogComponent]
+    imports: [
+        RfbloyaltySharedModule,
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+    ],
+    declarations: [
+        RfbEventComponent,
+        RfbEventDetailComponent,
+        RfbEventDialogComponent,
+        RfbEventDeleteDialogComponent,
+        RfbEventPopupComponent,
+        RfbEventDeletePopupComponent,
+    ],
+    entryComponents: [
+        RfbEventComponent,
+        RfbEventDialogComponent,
+        RfbEventPopupComponent,
+        RfbEventDeleteDialogComponent,
+        RfbEventDeletePopupComponent,
+    ],
+    providers: [
+        RfbEventService,
+        RfbEventPopupService,
+        RfbEventResolvePagingParams,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RfbloyaltyRfbEventModule {}

@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * Spring Data  repository for the RfbLocation entity.
+ * Spring Data JPA repository for the RfbLocation entity.
  */
 @SuppressWarnings("unused")
 @Repository

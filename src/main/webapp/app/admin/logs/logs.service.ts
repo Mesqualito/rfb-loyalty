@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
-import { SERVER_API_URL } from 'app/app.constants';
+import {Log} from './log.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class LogsService {
-  constructor(private http: HttpClient) {}
+    constructor(private http: Http) { }
 
-  changeLevel(name: string, configuredLevel: string): Observable<HttpResponse<any>> {
-    return this.http.post(SERVER_API_URL + 'management/loggers/' + name, { configuredLevel }, { observe: 'response' });
-  }
+    changeLevel(log: Log): Observable<Response> {
+        return this.http.put('management/logs', log);
+    }
 
-  findAll(): Observable<HttpResponse<any>> {
-    return this.http.get<any>(SERVER_API_URL + 'management/loggers', { observe: 'response' });
-  }
+    findAll(): Observable<Log[]> {
+        return this.http.get('management/logs').map((res: Response) => res.json());
+    }
 }

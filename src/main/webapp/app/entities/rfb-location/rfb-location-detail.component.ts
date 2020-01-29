@@ -1,24 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { IRfbLocation } from 'app/shared/model/rfb-location.model';
+import {RfbLocation} from './rfb-location.model';
+import {RfbLocationService} from './rfb-location.service';
 
 @Component({
-  selector: 'jhi-rfb-location-detail',
-  templateUrl: './rfb-location-detail.component.html'
+    selector: 'jhi-rfb-location-detail',
+    templateUrl: './rfb-location-detail.component.html'
 })
-export class RfbLocationDetailComponent implements OnInit {
-  rfbLocation: IRfbLocation;
+export class RfbLocationDetailComponent implements OnInit, OnDestroy {
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+    rfbLocation: RfbLocation;
+    private subscription: Subscription;
+    private eventSubscriber: Subscription;
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ rfbLocation }) => {
-      this.rfbLocation = rfbLocation;
-    });
-  }
+    constructor(
+        private eventManager: JhiEventManager,
+        private rfbLocationService: RfbLocationService,
+        private route: ActivatedRoute
+    ) {
+    }
 
-  previousState() {
-    window.history.back();
-  }
+    ngOnInit() {
+        this.subscription = this.route.params.subscribe((params) => {
+            this.load(params['id']);
+        });
+        this.registerChangeInRfbLocations();
+    }
+
+    load(id) {
+        this.rfbLocationService.find(id).subscribe((rfbLocation) => {
+            this.rfbLocation = rfbLocation;
+        });
+    }
+    previousState() {
+        window.history.back();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+        this.eventManager.destroy(this.eventSubscriber);
+    }
+
+    registerChangeInRfbLocations() {
+        this.eventSubscriber = this.eventManager.subscribe(
+            'rfbLocationListModification',
+            (response) => this.load(this.rfbLocation.id)
+        );
+    }
 }

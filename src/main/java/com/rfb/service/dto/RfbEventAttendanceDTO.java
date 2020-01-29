@@ -1,11 +1,12 @@
 package com.rfb.service.dto;
 
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.rfb.domain.RfbEventAttendance} entity.
+ * A DTO for the RfbEventAttendance entity.
  */
 public class RfbEventAttendanceDTO implements Serializable {
 
@@ -13,10 +14,9 @@ public class RfbEventAttendanceDTO implements Serializable {
 
     private LocalDate attendanceDate;
 
-
     private RfbEventDTO rfbEventDTO;
 
-    private RfbUserDTO rfbUserDTO;
+    private UserDTO userDTO;
 
     public Long getId() {
         return id;
@@ -42,12 +42,12 @@ public class RfbEventAttendanceDTO implements Serializable {
         this.rfbEventDTO = rfbEventDTO;
     }
 
-    public RfbUserDTO getRfbUserDTO() {
-        return rfbUserDTO;
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 
-    public void setRfbUserDTO(RfbUserDTO rfbUserDTO) {
-        this.rfbUserDTO = rfbUserDTO;
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class RfbEventAttendanceDTO implements Serializable {
         }
 
         RfbEventAttendanceDTO rfbEventAttendanceDTO = (RfbEventAttendanceDTO) o;
-        if (rfbEventAttendanceDTO.getId() == null || getId() == null) {
+        if(rfbEventAttendanceDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), rfbEventAttendanceDTO.getId());
@@ -76,8 +76,6 @@ public class RfbEventAttendanceDTO implements Serializable {
         return "RfbEventAttendanceDTO{" +
             "id=" + getId() +
             ", attendanceDate='" + getAttendanceDate() + "'" +
-            ", rfbEvent=" + getRfbEventDTO().getId() +
-            ", rfbUser=" + getRfbUserDTO().getId() +
             "}";
     }
 }

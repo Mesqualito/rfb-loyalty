@@ -1,5 +1,13 @@
 {
-    "name": "RfbLocation",
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "rvbEvent",
+            "otherEntityName": "rfbEvent",
+            "otherEntityRelationshipName": "rfbLocation"
+        }
+    ],
     "fields": [
         {
             "fieldName": "locationName",
@@ -10,22 +18,9 @@
             "fieldType": "Integer"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "rfbEvent",
-            "otherEntityRelationshipName": "rfbLocation",
-            "relationshipName": "rvbEvent"
-        }
-    ],
-    "changelogDate": "20191112204813",
+    "changelogDate": "20171014184113",
     "entityTableName": "rfb_location",
     "dto": "mapstruct",
     "pagination": "pagination",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+    "service": "serviceImpl"
 }

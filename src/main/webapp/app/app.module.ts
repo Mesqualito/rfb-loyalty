@@ -1,30 +1,46 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import './vendor.ts';
 
-import './vendor';
-import { RfbloyaltySharedModule } from 'app/shared/shared.module';
-import { RfbloyaltyCoreModule } from 'app/core/core.module';
-import { RfbloyaltyAppRoutingModule } from './app-routing.module';
-import { RfbloyaltyHomeModule } from './home/home.module';
-import { RfbloyaltyEntityModule } from './entities/entity.module';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {Ng2Webstorage} from 'ng2-webstorage';
+
+import {RfbloyaltySharedModule, UserRouteAccessService} from './shared';
+import {RfbloyaltyHomeModule} from './home/home.module';
+import {RfbloyaltyAdminModule} from './admin/admin.module';
+import {RfbloyaltyAccountModule} from './account/account.module';
+import {RfbloyaltyEntityModule} from './entities/entity.module';
+
+import {customHttpProvider} from './blocks/interceptor/http.provider';
+import {PaginationConfig} from './blocks/config/uib-pagination.config';
+import {ErrorComponent, FooterComponent, JhiMainComponent, LayoutRoutingModule, NavbarComponent, PageRibbonComponent, ProfileService} from './layouts';
+
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-import { JhiMainComponent } from './layouts/main/main.component';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { FooterComponent } from './layouts/footer/footer.component';
-import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
-import { ErrorComponent } from './layouts/error/error.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    RfbloyaltySharedModule,
-    RfbloyaltyCoreModule,
-    RfbloyaltyHomeModule,
-    // jhipster-needle-angular-add-module JHipster will add new module here
-    RfbloyaltyEntityModule,
-    RfbloyaltyAppRoutingModule
-  ],
-  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
-  bootstrap: [JhiMainComponent]
+    imports: [
+        BrowserModule,
+        LayoutRoutingModule,
+        Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
+        RfbloyaltySharedModule,
+        RfbloyaltyHomeModule,
+        RfbloyaltyAdminModule,
+        RfbloyaltyAccountModule,
+        RfbloyaltyEntityModule,
+        // jhipster-needle-angular-add-module JHipster will add new module here
+    ],
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent
+    ],
+    providers: [
+        ProfileService,
+        customHttpProvider(),
+        PaginationConfig,
+        UserRouteAccessService
+    ],
+    bootstrap: [ JhiMainComponent ]
 })
 export class RfbloyaltyAppModule {}

@@ -1,14 +1,54 @@
-import { NgModule } from '@angular/core';
-import { RfbloyaltySharedLibsModule } from './shared-libs.module';
-import { JhiAlertComponent } from './alert/alert.component';
-import { JhiAlertErrorComponent } from './alert/alert-error.component';
-import { JhiLoginModalComponent } from './login/login.component';
-import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {DatePipe} from '@angular/common';
+
+import {
+    AccountService,
+    AuthServerProvider,
+    CSRFService,
+    HasAnyAuthorityDirective,
+    JhiLoginModalComponent,
+    JhiSocialComponent,
+    LoginModalService,
+    LoginService,
+    Principal,
+    RfbloyaltySharedCommonModule,
+    RfbloyaltySharedLibsModule,
+    SocialService,
+    StateStorageService,
+    UserService
+} from './';
 
 @NgModule({
-  imports: [RfbloyaltySharedLibsModule],
-  declarations: [JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective],
-  entryComponents: [JhiLoginModalComponent],
-  exports: [RfbloyaltySharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective]
+    imports: [
+        RfbloyaltySharedLibsModule,
+        RfbloyaltySharedCommonModule
+    ],
+    declarations: [
+        JhiSocialComponent,
+        JhiLoginModalComponent,
+        HasAnyAuthorityDirective
+    ],
+    providers: [
+        LoginService,
+        LoginModalService,
+        AccountService,
+        StateStorageService,
+        Principal,
+        CSRFService,
+        AuthServerProvider,
+        SocialService,
+        UserService,
+        DatePipe
+    ],
+    entryComponents: [JhiLoginModalComponent],
+    exports: [
+        RfbloyaltySharedCommonModule,
+        JhiSocialComponent,
+        JhiLoginModalComponent,
+        HasAnyAuthorityDirective,
+        DatePipe
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
 })
 export class RfbloyaltySharedModule {}

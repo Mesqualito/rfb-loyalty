@@ -1,6 +1,5 @@
 package com.rfb.security;
 
-
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
@@ -9,10 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-// because of extending SimpleUrlAuthenticationFailureHandler, here is the place to
-// handle the case a user fails to login (instead of using the original Spring AjaxAuthenticationFailureHandler)
-// - send back a 401 page with better/corrected 'errorMessage'
-// this class will be called in 'SecurityConfiguration.java'
 public class RfbAjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override

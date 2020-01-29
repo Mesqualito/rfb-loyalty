@@ -21,7 +21,7 @@
 *.properties    text
 *.sass          text
 *.scss          text
-*.sh            text eol=lf
+*.sh            text
 *.sql           text
 *.txt           text
 *.ts            text
@@ -93,6 +93,7 @@ TODO            text
 .stylelintrc    text
 
 ## CONFIGS
+*.bowerrc       text
 *.conf          text
 *.config        text
 .editorconfig   text

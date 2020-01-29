@@ -1,66 +1,69 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
-import { VERSION } from 'app/app.constants';
-import { AccountService } from 'app/core/auth/account.service';
-import { LoginModalService } from 'app/core/login/login-modal.service';
-import { LoginService } from 'app/core/login/login.service';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
+import {ProfileService} from '../profiles/profile.service';
+import {LoginModalService, LoginService, Principal} from '../../shared';
+
+import {VERSION} from '../../app.constants';
 
 @Component({
-  selector: 'jhi-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['navbar.scss']
+    selector: 'jhi-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: [
+        'navbar.css'
+    ]
 })
 export class NavbarComponent implements OnInit {
-  inProduction: boolean;
-  isNavbarCollapsed: boolean;
-  swaggerEnabled: boolean;
-  modalRef: NgbModalRef;
-  version: string;
 
-  constructor(
-    private loginService: LoginService,
-    private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private profileService: ProfileService,
-    private router: Router
-  ) {
-    this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
-    this.isNavbarCollapsed = true;
-  }
+    inProduction: boolean;
+    isNavbarCollapsed: boolean;
+    languages: any[];
+    swaggerEnabled: boolean;
+    modalRef: NgbModalRef;
+    version: string;
 
-  ngOnInit() {
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.swaggerEnabled = profileInfo.swaggerEnabled;
-    });
-  }
+    constructor(
+        private loginService: LoginService,
+        private principal: Principal,
+        private loginModalService: LoginModalService,
+        private profileService: ProfileService,
+        private router: Router
+    ) {
+        this.version = VERSION ? 'v' + VERSION : '';
+        this.isNavbarCollapsed = true;
+    }
 
-  collapseNavbar() {
-    this.isNavbarCollapsed = true;
-  }
+    ngOnInit() {
+        this.profileService.getProfileInfo().subscribe((profileInfo) => {
+            this.inProduction = profileInfo.inProduction;
+            this.swaggerEnabled = profileInfo.swaggerEnabled;
+        });
+    }
 
-  isAuthenticated() {
-    return this.accountService.isAuthenticated();
-  }
+    collapseNavbar() {
+        this.isNavbarCollapsed = true;
+    }
 
-  login() {
-    this.modalRef = this.loginModalService.open();
-  }
+    isAuthenticated() {
+        return this.principal.isAuthenticated();
+    }
 
-  logout() {
-    this.collapseNavbar();
-    this.loginService.logout();
-    this.router.navigate(['']);
-  }
+    login() {
+        this.modalRef = this.loginModalService.open();
+    }
 
-  toggleNavbar() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
+    logout() {
+        this.collapseNavbar();
+        this.loginService.logout();
+        this.router.navigate(['']);
+    }
 
-  getImageUrl() {
-    return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
-  }
+    toggleNavbar() {
+        this.isNavbarCollapsed = !this.isNavbarCollapsed;
+    }
+
+    getImageUrl() {
+        return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
 }

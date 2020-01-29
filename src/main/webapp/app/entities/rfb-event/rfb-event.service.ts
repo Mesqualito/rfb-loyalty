@@ -1,83 +1,79 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {SERVER_API_URL} from '../../app.constants';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { IRfbEvent, RfbEvent } from 'app/shared/model/rfb-event.model';
+import {JhiDateUtils} from 'ng-jhipster';
 
-type EntityResponseType = HttpResponse<IRfbEvent>;
-type EntityArrayResponseType = HttpResponse<IRfbEvent[]>;
+import {RfbEvent} from './rfb-event.model';
+import {createRequestOption, ResponseWrapper} from '../../shared';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class RfbEventService {
-  public resourceUrl = SERVER_API_URL + 'api/rfb-events';
 
-  constructor(protected http: HttpClient) {}
+    private resourceUrl = SERVER_API_URL + 'api/rfb-events';
 
-  create(rfbEvent: IRfbEvent): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(rfbEvent);
-    return this.http
-      .post<IRfbEvent>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
-  update(rfbEvent: IRfbEvent): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(rfbEvent);
-    return this.http
-      .put<IRfbEvent>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
-  find(id: number): Observable<EntityResponseType> {
-    return this.http
-      .get<IRfbEvent>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
-  findByLocation(locationID: number): Observable<RfbEvent> {
-    return this.http.get<IRfbEvent>(`${this.resourceUrl}/location/${locationID}`, { observe: 'response' }).pipe(
-      map((res: Response) => {
-        return res.json();
-      })
-    );
-  }
-
-  query(req?: any): Observable<EntityArrayResponseType> {
-    const options = createRequestOption(req);
-    return this.http
-      .get<IRfbEvent[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
-  }
-
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
-  }
-
-  protected convertDateFromClient(rfbEvent: IRfbEvent): IRfbEvent {
-    const copy: IRfbEvent = Object.assign({}, rfbEvent, {
-      eventDate: rfbEvent.eventDate != null && rfbEvent.eventDate.isValid() ? rfbEvent.eventDate.format(DATE_FORMAT) : null
-    });
-    return copy;
-  }
-
-  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
-    if (res.body) {
-      res.body.eventDate = res.body.eventDate != null ? moment(res.body.eventDate) : null;
+    create(rfbEvent: RfbEvent): Observable<RfbEvent> {
+        const copy = this.convert(rfbEvent);
+        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
     }
-    return res;
-  }
 
-  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
-    if (res.body) {
-      res.body.forEach((rfbEvent: IRfbEvent) => {
-        rfbEvent.eventDate = rfbEvent.eventDate != null ? moment(rfbEvent.eventDate) : null;
-      });
+    update(rfbEvent: RfbEvent): Observable<RfbEvent> {
+        const copy = this.convert(rfbEvent);
+        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
     }
-    return res;
-  }
+
+    find(id: number): Observable<RfbEvent> {
+        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
+    query(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    delete(id: number): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    findByLocation(locationId: number): Observable<RfbEvent> {
+        return this.http.get(`${this.resourceUrl}/location/${locationId}`).map((res: Response) => {
+            return res.json();
+        });
+    }
+
+    private convertResponse(res: Response): ResponseWrapper {
+        const jsonResponse = res.json();
+        for (let i = 0; i < jsonResponse.length; i++) {
+            this.convertItemFromServer(jsonResponse[i]);
+        }
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+    }
+
+    private convertItemFromServer(entity: any) {
+        entity.eventDate = this.dateUtils
+            .convertLocalDateFromServer(entity.eventDate);
+    }
+
+    private convert(rfbEvent: RfbEvent): RfbEvent {
+        const copy: RfbEvent = Object.assign({}, rfbEvent);
+        copy.eventDate = this.dateUtils
+            .convertLocalDateToServer(rfbEvent.eventDate);
+        return copy;
+    }
 }

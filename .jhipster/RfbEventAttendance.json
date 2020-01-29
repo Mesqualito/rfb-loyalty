@@ -1,11 +1,5 @@
 {
-    "name": "RfbEventAttendance",
-    "fields": [
-        {
-            "fieldName": "attendanceDate",
-            "fieldType": "LocalDate"
-        }
-    ],
+    "fluentMethods": true,
     "relationships": [
         {
             "relationshipName": "rfbEvent",
@@ -20,14 +14,15 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191112204815",
+    "fields": [
+        {
+            "fieldName": "attendanceDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20171014184115",
     "entityTableName": "rfb_event_attendance",
     "dto": "mapstruct",
     "pagination": "infinite-scroll",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+    "service": "serviceImpl"
 }

@@ -1,77 +1,69 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
+import {AccountService, Principal, ResponseWrapper} from '../../shared';
+import {RfbLocation} from '../../entities/rfb-location/rfb-location.model';
+import {RfbLocationService} from '../../entities/rfb-location/rfb-location.service';
 
 @Component({
-  selector: 'jhi-settings',
-  templateUrl: './settings.component.html'
+    selector: 'jhi-settings',
+    templateUrl: './settings.component.html'
 })
 export class SettingsComponent implements OnInit {
-  error: string;
-  success: string;
-  settingsForm = this.fb.group({
-    firstName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    lastName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
-    activated: [false],
-    authorities: [[]],
-    langKey: ['en'],
-    login: [],
-    imageUrl: []
-  });
+    error: string;
+    success: string;
+    settingsAccount: any;
+    languages: any[];
+    locations: RfbLocation[];
 
-  constructor(private accountService: AccountService, private fb: FormBuilder) {}
+    constructor(
+        private account: AccountService,
+        private principal: Principal,
+        private locationService: RfbLocationService
+    ) {
+    }
 
-  ngOnInit() {
-    this.accountService.identity().subscribe(account => {
-      this.updateForm(account);
-    });
-  }
-
-  save() {
-    const settingsAccount = this.accountFromForm();
-    this.accountService.save(settingsAccount).subscribe(
-      () => {
-        this.error = null;
-        this.success = 'OK';
-        this.accountService.identity(true).subscribe(account => {
-          this.updateForm(account);
+    ngOnInit() {
+        this.principal.identity().then((account) => {
+            this.settingsAccount = this.copyAccount(account);
         });
-      },
-      () => {
-        this.success = null;
-        this.error = 'ERROR';
-      }
-    );
-  }
+        this.loadLocations();
+    }
 
-  private accountFromForm(): any {
-    const account = {};
-    return {
-      ...account,
-      firstName: this.settingsForm.get('firstName').value,
-      lastName: this.settingsForm.get('lastName').value,
-      email: this.settingsForm.get('email').value,
-      activated: this.settingsForm.get('activated').value,
-      authorities: this.settingsForm.get('authorities').value,
-      langKey: this.settingsForm.get('langKey').value,
-      login: this.settingsForm.get('login').value,
-      imageUrl: this.settingsForm.get('imageUrl').value
-    };
-  }
+    save() {
+        this.account.save(this.settingsAccount).subscribe(() => {
+            this.error = null;
+            this.success = 'OK';
+            this.principal.identity(true).then((account) => {
+                this.settingsAccount = this.copyAccount(account);
+            });
+        }, () => {
+            this.success = null;
+            this.error = 'ERROR';
+        });
+    }
 
-  updateForm(account: Account): void {
-    this.settingsForm.patchValue({
-      firstName: account.firstName,
-      lastName: account.lastName,
-      email: account.email,
-      activated: account.activated,
-      authorities: account.authorities,
-      langKey: account.langKey,
-      login: account.login,
-      imageUrl: account.imageUrl
-    });
-  }
+    copyAccount(account) {
+        return {
+            activated: account.activated,
+            email: account.email,
+            firstName: account.firstName,
+            langKey: account.langKey,
+            lastName: account.lastName,
+            login: account.login,
+            imageUrl: account.imageUrl,
+            homeLocation: account.homeLocation
+        };
+    }
+
+    loadLocations() {
+        this.locationService.query({
+            page: 0,
+            size: 100,
+            sort: ['locationName', 'ASC']}).subscribe(
+            (res: ResponseWrapper) => {
+                this.locations = res.json;
+            },
+            (res: ResponseWrapper) => { console.log(res) }
+        );
+    }
 }

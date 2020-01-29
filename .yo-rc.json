@@ -1,17 +1,16 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com"
+      "packageName": "com.rfb"
     },
-    "jhipsterVersion": "6.4.1",
-    "applicationType": "monolith",
+    "jhipsterVersion": "4.8.2",
     "baseName": "rfbloyalty",
-    "packageName": "com",
-    "packageFolder": "com",
+    "packageName": "com.rfb",
+    "packageFolder": "com/rfb",
     "serverPort": "8080",
     "authenticationType": "session",
-    "cacheProvider": "ehcache",
-    "enableHibernateCache": true,
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": false,
     "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "h2Memory",
@@ -20,20 +19,15 @@
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "gradle",
+    "enableSocialSignIn": true,
     "enableSwaggerCodegen": false,
-    "rememberMeKey": "999278fd3cf950fefebce3fa49e32e8d68c3489d73cba8d72e12ac13937ea005f58e28a16bc1b9de0d21f175ebf29841327e",
-    "embeddableLaunchScript": false,
-    "useSass": true,
-    "clientPackageManager": "npm",
+    "rememberMeKey": "6502974dc68c39295f86f41c6a971220553ea298",
     "clientFramework": "angularX",
-    "clientTheme": "none",
-    "clientThemeVariant": "",
+    "useSass": false,
+    "clientPackageManager": "yarn",
+    "applicationType": "monolith",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
-    "entitySuffix": "",
-    "dtoSuffix": "DTO",
-    "otherModules": [],
-    "enableTranslation": false,
-    "blueprints": []
+    "enableTranslation": false
   }
 }

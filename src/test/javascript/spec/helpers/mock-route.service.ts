@@ -1,36 +1,15 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { SpyObject } from './spyobject';
-import { Observable, of } from 'rxjs';
-import Spy = jasmine.Spy;
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
 
 export class MockActivatedRoute extends ActivatedRoute {
-  constructor(parameters?: any) {
-    super();
-    this.queryParams = of(parameters);
-    this.params = of(parameters);
-    this.data = of({
-      ...parameters,
-      pagingParams: {
-        page: 10,
-        ascending: false,
-        predicate: 'id'
-      }
-    });
-  }
+
+    constructor(parameters?: any) {
+        super();
+        this.queryParams = Observable.of(parameters);
+        this.params = Observable.of(parameters);
+    }
 }
 
-export class MockRouter extends SpyObject {
-  navigateSpy: Spy;
-  navigateByUrlSpy: Spy;
-  events: Observable<any>;
-
-  constructor() {
-    super(Router);
-    this.navigateSpy = this.spy('navigate');
-    this.navigateByUrlSpy = this.spy('navigateByUrl');
-  }
-
-  setRouterEvent(event: any) {
-    this.events = of(event);
-  }
+export class MockRouter {
+    navigate = jasmine.createSpy('navigate');
 }

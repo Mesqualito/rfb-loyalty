@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Http, Response, URLSearchParams} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {SERVER_API_URL} from '../../app.constants';
 
-import { SERVER_API_URL } from 'app/app.constants';
-
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ActivateService {
-  constructor(private http: HttpClient) {}
 
-  get(key: string): Observable<any> {
-    return this.http.get(SERVER_API_URL + 'api/activate', {
-      params: new HttpParams().set('key', key)
-    });
-  }
+    constructor(private http: Http) {}
+
+    get(key: string): Observable<any> {
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('key', key);
+
+        return this.http.get(SERVER_API_URL + 'api/activate', {
+            search: params
+        }).map((res: Response) => res);
+    }
 }
